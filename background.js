@@ -1,37 +1,64 @@
-console.log("Got to background.js. Are you happy?");
+//import * as messageTools from '/modules/messageTools.mjs';
 
 function sendToConsole() {
 	console.log("Got to the callback");
 }
-window.addEventListener("load", sendToConsole);
 
-window.addEventListener("clicked",sendToConsole);
+function updateContextMenus() {
+		console.log("URL Link updating context menus");
+}
 
-document.addEventListener("clicked",sendToConsole);
+function onMessage( message )
+{
+    console.log('got to onMessage callback');
+}
+
+// Dragging starts
+function onDragStart(ev) {
+    // Flag origin
+	console.log("URL Link dragging '" + ev.target.id + "'");
+
+}
+
+console.log("Got to background.js.");
+
+console.log(browser.menus)
+
+//browser.menus.addEventListener('clicked',sendToConsole);
+//browser.menus.addEventListener('click',sendToConsole);
+
+browser.menus.onClicked.addListener((info, tab) => {
+	console.log("clicked a menu");
+	console.log("info:")
+	console.log(info)
+	console.log("tab")
+	console.log(tab)
+	console.log("The selected texyt is: " + info.selectionText)
+	let props = {
+		"url": "https://www.google.com"
+	}
+	browser.tabs.create( props)
+	browser.windows.create({
+		"url": "https://www.google.com"
+	})
+
+});
+
+browser.runtime.onConnect.addListener(port => {
+	console.log('The extension is running.');
+})
+
+browser.runtime.onInstalled.addListener(details => {
+	console.log('Installed the extension');
+	console.log(details)
+});
+
+browser.menus.create({
+	id: "no-utm",
+	title: "Open without query string",
+	contexts: ["selection","link"]
+});
+console.log('Added context menu');
 
 
-window.addEventListener("click", sendToConsole);
 
-document.addEventListener("click", sendToConsole)
-
-document.addEventListener("contextmenu",sendToConsole);
-
-browser.addEventListener("click",sendToConsole);
-browser.addEventListener("clicked",sendToConsole);
-
-document.getElementById("messagepane").addEventListener("click",sendToConsole)
-document.getElementById("messagepane").addEventListener("clicked",sendToConsole)
-/* document.addEventListener("click", (e) => {
-
-  
-    function beastNameToURL(beastName) {
-      switch (beastName) {
-        case "Frog":
-          return browser.runtime.getURL("beasts/frog.jpg");
-        case "Snake":
-          return browser.runtime.getURL("beasts/snake.jpg");
-        case "Turtle":
-          return browser.runtime.getURL("beasts/turtle.jpg");
-      }
-    }
-}) */

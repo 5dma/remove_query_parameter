@@ -18,3 +18,13 @@ function notifyExtension(e) {
 Add notifyExtension() as a listener to click events.
 */
 window.addEventListener("click", notifyExtension);
+
+
+// browser.windows.create({
+                        // TBD unsupported by Firefox @v56-57dev  "focused": true,
+//                        "url": lnk
+//
+//  browser.windows.openDefaultBrowser( lnk );});
+/*
+Creating the context menu: onContextMenuCreated
+*/

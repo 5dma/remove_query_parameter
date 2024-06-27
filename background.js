@@ -31,16 +31,14 @@ browser.menus.onClicked.addListener((info, tab) => {
 	console.log("clicked a menu");
 	console.log("info:")
 	console.log(info)
-	console.log("tab")
-	console.log(tab)
+	//console.log("tab")
+	//console.log(tab)
 	console.log("The selected texyt is: " + info.selectionText)
-	let props = {
-		"url": "https://www.google.com"
-	}
-	browser.tabs.create( props)
-	browser.windows.create({
-		"url": "https://www.google.com"
-	})
+
+	let targetUrl = info.hasOwnProperty('linkUrl') ? info.linkUrl : info.selectionText;
+
+	browser.tabs.create( {"url": targetUrl})
+
 
 });
 

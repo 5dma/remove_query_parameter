@@ -32,23 +32,38 @@ browser.menus.onClicked.addListener((info, tab) => {
 	console.log(info)
 	//console.log("tab")
 	//console.log(tab)
-	
+
 
 	let targetUrl = info.hasOwnProperty('linkUrl') ? info.linkUrl : info.selectionText;
 
 	console.log("The target URL is: " + targetUrl)
 
-	let url;
+	let urlWithQueryString;
 
 	try {
-		url = new URL(targetUrl);
+		urlWithQueryString = new URL(targetUrl);
 	} catch (_) {
 		console.log("The url is not valid: " + targetUrl)
 		return;
 	}
 
+	urlWithQueryStringString = urlWithQueryString.href
 
-	browser.tabs.create({ "url": targetUrl })
+	console.log("The urlWithQueryString is: " + urlWithQueryStringString)
+
+	let queryStringStart = urlWithQueryStringString.indexOf("?")
+	if (queryStringStart == -1) {
+		urlWithoutQueryString = urlWithQueryStringString
+	} else {
+		urlWithoutQueryString = urlWithQueryStringString.substring(0,queryStringStart)
+	}
+
+
+	console.log("the urlWithoutQueryStrong is " + urlWithoutQueryString)
+
+
+
+	browser.tabs.create({ "url": urlWithoutQueryString })
 
 
 });

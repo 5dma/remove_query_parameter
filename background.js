@@ -5,17 +5,16 @@ function sendToConsole() {
 }
 
 function updateContextMenus() {
-		console.log("URL Link updating context menus");
+	console.log("URL Link updating context menus");
 }
 
-function onMessage( message )
-{
-    console.log('got to onMessage callback');
+function onMessage(message) {
+	console.log('got to onMessage callback');
 }
 
 // Dragging starts
 function onDragStart(ev) {
-    // Flag origin
+	// Flag origin
 	console.log("URL Link dragging '" + ev.target.id + "'");
 
 }
@@ -33,11 +32,23 @@ browser.menus.onClicked.addListener((info, tab) => {
 	console.log(info)
 	//console.log("tab")
 	//console.log(tab)
-	console.log("The selected texyt is: " + info.selectionText)
+	
 
 	let targetUrl = info.hasOwnProperty('linkUrl') ? info.linkUrl : info.selectionText;
 
-	browser.tabs.create( {"url": targetUrl})
+	console.log("The target URL is: " + targetUrl)
+
+	let url;
+
+	try {
+		url = new URL(targetUrl);
+	} catch (_) {
+		console.log("The url is not valid: " + targetUrl)
+		return;
+	}
+
+
+	browser.tabs.create({ "url": targetUrl })
 
 
 });
@@ -54,7 +65,7 @@ browser.runtime.onInstalled.addListener(details => {
 browser.menus.create({
 	id: "no-utm",
 	title: "Open without query string",
-	contexts: ["selection","link"]
+	contexts: ["selection", "link"]
 });
 console.log('Added context menu');
 

@@ -62,9 +62,7 @@ browser.menus.onClicked.addListener((info, tab) => {
 	console.log("the urlWithoutQueryStrong is " + urlWithoutQueryString)
 
 
-
-	browser.tabs.create({ "url": urlWithoutQueryString })
-
+	browser.windows.openDefaultBrowser(urlWithoutQueryString)
 
 });
 

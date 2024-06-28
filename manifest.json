@@ -13,7 +13,7 @@
 		}
 	},
 	"permissions": [
-		"notifications","menus"
+		"menus","messagesRead"
 	],
 	"background": {
 		"scripts": [ "background.js" ]

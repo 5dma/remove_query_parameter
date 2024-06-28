@@ -1,45 +1,16 @@
-//import * as messageTools from '/modules/messageTools.mjs';
-
-function sendToConsole() {
-	console.log("Got to the callback");
-}
-
-function updateContextMenus() {
-	console.log("URL Link updating context menus");
-}
-
-function onMessage(message) {
-	console.log('got to onMessage callback');
-}
-
-// Dragging starts
-function onDragStart(ev) {
-	// Flag origin
-	console.log("URL Link dragging '" + ev.target.id + "'");
-
-}
-
-console.log("Got to background.js.");
-
-console.log(browser.menus)
-
-//browser.menus.addEventListener('clicked',sendToConsole);
-//browser.menus.addEventListener('click',sendToConsole);
-
+/* User clicked on our context menu item, process the selected text or link. */
 browser.menus.onClicked.addListener((info, tab) => {
 	console.log("clicked a menu");
 	console.log("info:")
 	console.log(info)
-	//console.log("tab")
-	//console.log(tab)
-
-
+	console.log("tab")
+	console.log(tab)
+	
 	let targetUrl = info.hasOwnProperty('linkUrl') ? info.linkUrl : info.selectionText;
-
-	console.log("The target URL is: " + targetUrl)
 
 	let urlWithQueryString;
 
+	/* If the selected text or link is a valid URL, continue processing; otherwise, return. */
 	try {
 		urlWithQueryString = new URL(targetUrl);
 	} catch (_) {
@@ -47,10 +18,8 @@ browser.menus.onClicked.addListener((info, tab) => {
 		return;
 	}
 
+	/* Remove the entire query string (everything after first ? in URl). */
 	urlWithQueryStringString = urlWithQueryString.href
-
-	console.log("The urlWithQueryString is: " + urlWithQueryStringString)
-
 	let queryStringStart = urlWithQueryStringString.indexOf("?")
 	if (queryStringStart == -1) {
 		urlWithoutQueryString = urlWithQueryStringString
@@ -58,21 +27,9 @@ browser.menus.onClicked.addListener((info, tab) => {
 		urlWithoutQueryString = urlWithQueryStringString.substring(0,queryStringStart)
 	}
 
-
 	console.log("the urlWithoutQueryStrong is " + urlWithoutQueryString)
-
-
 	browser.windows.openDefaultBrowser(urlWithoutQueryString)
 
-});
-
-browser.runtime.onConnect.addListener(port => {
-	console.log('The extension is running.');
-})
-
-browser.runtime.onInstalled.addListener(details => {
-	console.log('Installed the extension');
-	console.log(details)
 });
 
 browser.menus.create({
@@ -80,7 +37,3 @@ browser.menus.create({
 	title: "Open without query string",
 	contexts: ["selection", "link"]
 });
-console.log('Added context menu');
-
-
-

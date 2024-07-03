@@ -3,13 +3,14 @@
 	"name": "Stop Link Tracking",
 	"short_name": "UTM Remover",
 	"description": "Opens a right-clicked hyperlink in an email after dropping the query string, defeating the utm tracking parameters.",
-	"homepage_url": "https://github.com/etc",
+	"homepage_url": "https://github.com/5dma/remove_query_parameter",
 	"version": "1.0",
-	"author": "Sam Johnson",
+	"author": "Mark Lautman",
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "mark@lautman.net",
-			"strict_min_version": "115"
+			"strict_min_version": "115.12",
+			"strict_max_version": "115.*"
 		}
 	},
 	"permissions": [
